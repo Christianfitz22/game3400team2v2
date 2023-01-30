@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 1.0f;
     public float gravity = -9.81f;
 
+    [SerializeField]
+    private Transform respawnPoint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,11 +29,8 @@ public class PlayerController : MonoBehaviour
     private void Movement()
     {
         grounded = controller.isGrounded;
-        Debug.Log(grounded);
-        Debug.Log(velocity);
         if (grounded && velocity.y < 0)
         {
-            Debug.Log("y reset");
             velocity.y = 0;
         }
 
@@ -49,5 +49,20 @@ public class PlayerController : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
         }
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    public void Respawn()
+    {
+        controller.enabled = false;
+        gameObject.transform.position = respawnPoint.position;
+        gameObject.transform.rotation = respawnPoint.rotation;
+        velocity.y = 0;
+        Debug.Log(transform.position);
+        controller.enabled = true;
+    }
+
+    public void AddVelocity(Vector3 add)
+    {
+        velocity += add;
     }
 }
