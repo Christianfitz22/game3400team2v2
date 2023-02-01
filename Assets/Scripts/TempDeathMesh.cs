@@ -34,6 +34,10 @@ public class TempDeathMesh : MonoBehaviour
                 boxCollider.enabled = false;
                 active = false;
                 elapsedTime = 0f;
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.SetActive(false);
+                }
             }
         }
         else
@@ -44,6 +48,10 @@ public class TempDeathMesh : MonoBehaviour
                 boxCollider.enabled = true;
                 active = true;
                 elapsedTime = 0f;
+                foreach (Transform child in transform)
+                {
+                    child.gameObject.SetActive(true);
+                }
             }
         }
 
