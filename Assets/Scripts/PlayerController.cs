@@ -14,10 +14,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform respawnPoint;
 
+    private float distToGround;
+
     // Start is called before the first frame update
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
+        distToGround = gameObject.GetComponent<CapsuleCollider>().bounds.extents.y;
     }
 
     // Update is called once per frame
@@ -26,9 +29,16 @@ public class PlayerController : MonoBehaviour
         Movement();
     }
 
+    private bool isGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f, -1, QueryTriggerInteraction.Ignore);
+    }
+
     private void Movement()
     {
-        grounded = controller.isGrounded;
+        grounded = controller.isGrounded || isGrounded();
+        //grounded = isGrounded();
+        Debug.Log(grounded);
         if (grounded && velocity.y < 0)
         {
             velocity.y = 0;
@@ -49,6 +59,11 @@ public class PlayerController : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
         }
         controller.Move(velocity * Time.deltaTime);
+
+        if (Input.GetKeyDown("escape"))
+        {
+            Application.Quit();
+        }
     }
 
     public void Respawn()

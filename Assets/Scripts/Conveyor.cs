@@ -10,6 +10,7 @@ public class Conveyor : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         other.gameObject.GetComponent<CharacterController>().Move(transform.forward * speed * Time.deltaTime);
+        //other.gameObject.transform.position += transform.forward * speed * Time.deltaTime;
         //other.gameObject.GetComponent<PlayerController>().AddVelocity(transform.forward * speed * Time.deltaTime);
         //other.gameObject.GetComponent<Rigidbody>().velocity = transform.forward * speed * Time.deltaTime;
     }
