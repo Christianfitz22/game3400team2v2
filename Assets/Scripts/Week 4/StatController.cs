@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class StatController : MonoBehaviour
 {
@@ -16,14 +17,21 @@ public class StatController : MonoBehaviour
     private Image playerHealthContent;
     private Image bossHealthContent;
 
+    [SerializeField]
+    public int ammoMax;
+    public int ammoCur;
+    private TMP_Text ammoMeter;
+
     // Start is called before the first frame update
     void Start()
     {
         playerHealthContent = gameObject.transform.Find("PlayerHealthBar").GetComponent<Image>();
         bossHealthContent = gameObject.transform.Find("BossHealthBar").GetComponent<Image>();
+        ammoMeter = gameObject.transform.Find("AmmoLabel").GetComponent<TMP_Text>();
 
         playerHealth = playerMaxHealth;
         bossHealth = bossMaxHealth;
+        ammoMeter.SetText("Ammo: " + ammoCur + " / " + ammoMax);
     }
 
     public void changePlayerHealth(int amount)
@@ -36,8 +44,15 @@ public class StatController : MonoBehaviour
     public void changeBossHealth(int amount)
     {
         bossHealth += amount;
-        playerHealth = Math.Clamp(bossHealth, 0, bossMaxHealth);
+        bossHealth = Math.Clamp(bossHealth, 0, bossMaxHealth);
         bossHealthContent.fillAmount = (float)bossHealth / (float)bossMaxHealth;
+    }
+
+    public void changeAmmo(int amount)
+    {
+        ammoCur += amount;
+        ammoCur = Math.Clamp(ammoCur, 0, ammoMax);
+        ammoMeter.SetText("Ammo: " + ammoCur + " / " + ammoMax);
     }
 
     public bool playerDead()

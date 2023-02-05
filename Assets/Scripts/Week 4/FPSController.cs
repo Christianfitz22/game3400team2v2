@@ -16,20 +16,37 @@ public class FPSController : MonoBehaviour
 
     [SerializeField]
     private StatController stats;
-    public int damage;
+    [SerializeField]
+    private int damage;
+
+    private bool reloading;
+    [SerializeField]
+    private float reloadTime;
+    private float elapsedTime;
+
 
     // Start is called before the first frame update
     void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
         distToGround = gameObject.GetComponent<CapsuleCollider>().bounds.extents.y;
+
+        reloading = false;
+        elapsedTime = 0f;
     }
 
     // Update is called once per frame
     void Update()
     {
         Movement();
-        Shooting();
+        if (!reloading)
+        {
+            Shooting();
+        }
+        else
+        {
+            Reloading();
+        }
     }
 
     private bool isGrounded()
@@ -69,22 +86,52 @@ public class FPSController : MonoBehaviour
 
     private void Shooting()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (stats.ammoCur > 0)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
+            if (Input.GetButtonDown("Fire1"))
             {
-                if (hit.collider.gameObject.tag == "Boss")
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
                 {
-                    stats.changeBossHealth(-damage);
+                    if (hit.collider.gameObject.tag == "Boss")
+                    {
+                        stats.changeBossHealth(-damage);
+                        stats.changeAmmo(-1);
+                    }
                 }
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown("r"))
+            {
+                reloading = true;
+                stats.changeAmmo(stats.ammoMax);
             }
         }
     }
 
-    public void takeDamage(int damage)
+    public void takeDamage(int damageTaken)
     {
-        stats.changePlayerHealth(-damage);
+        Debug.Log("taken damage");
+        stats.changePlayerHealth(-damageTaken);
+        if (stats.playerDead())
+        {
+            Die();
+        }
+    }
+
+    private void Reloading()
+    {
+        if (elapsedTime >= reloadTime)
+        {
+            reloading = false;
+            elapsedTime = 0f;
+        }
+        else
+        {
+            elapsedTime += Time.deltaTime;
+        }
     }
 
     public void Die()

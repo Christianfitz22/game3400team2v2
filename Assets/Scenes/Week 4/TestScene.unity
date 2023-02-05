@@ -484,8 +484,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 6007608185370363970, guid: e87bb2d7b881f468abfdd27cad54a6a8, type: 3}
-  fireRate: 1
-  bulletSpeed: 5
+  fireRate: 2
+  bulletSpeed: 40
   bulletDamage: 1
 --- !u!1 &320202633
 GameObject:
@@ -612,6 +612,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMaxHealth: 10
   bossMaxHealth: 100
+  ammoMax: 6
+  ammoCur: 6
 --- !u!1 &475886975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1733,7 +1735,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1754482128}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
@@ -1839,6 +1841,7 @@ MonoBehaviour:
   gravity: -30
   stats: {fileID: 320202638}
   damage: 1
+  reloadTime: 3
 --- !u!1 &1785507343
 GameObject:
   m_ObjectHideFlags: 0
