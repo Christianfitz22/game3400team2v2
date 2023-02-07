@@ -55,6 +55,13 @@ public class StatController : MonoBehaviour
         ammoMeter.SetText("Ammo: " + ammoCur + " / " + ammoMax);
     }
 
+    public void setAmmo(int amount)
+    {
+        ammoCur = amount;
+        ammoCur = Math.Clamp(ammoCur, 0, ammoMax);
+        ammoMeter.SetText("Ammo: " + ammoCur + " / " + ammoMax);
+    }
+
     public bool playerDead()
     {
         return playerHealth <= 0;

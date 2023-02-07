@@ -96,9 +96,9 @@ public class FPSController : MonoBehaviour
                     if (hit.collider.gameObject.tag == "Boss")
                     {
                         stats.changeBossHealth(-damage);
-                        stats.changeAmmo(-1);
                     }
                 }
+                stats.changeAmmo(-1);
             }
         }
         else
@@ -131,6 +131,8 @@ public class FPSController : MonoBehaviour
         else
         {
             elapsedTime += Time.deltaTime;
+            int curAmmoReloaded = Mathf.FloorToInt(elapsedTime / (reloadTime / (float)stats.ammoMax));
+            stats.setAmmo(curAmmoReloaded);
         }
     }
 
