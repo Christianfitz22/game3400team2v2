@@ -23,6 +23,8 @@ public class FPSController : MonoBehaviour
     [SerializeField]
     private float reloadTime;
     private float elapsedTime;
+    [SerializeField]
+    private string levelName;
 
 
     // Start is called before the first frame update
@@ -138,6 +140,6 @@ public class FPSController : MonoBehaviour
 
     public void Die()
     {
-        SceneManager.LoadScene("TestScene");
+        SceneManager.LoadScene(levelName);
     }
 }

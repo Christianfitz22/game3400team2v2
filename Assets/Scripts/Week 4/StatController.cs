@@ -15,6 +15,7 @@ public class StatController : MonoBehaviour
     private int bossMaxHealth;
 
     private Image playerHealthContent;
+    private GameObject bossContainer;
     private Image bossHealthContent;
 
     [SerializeField]
@@ -33,7 +34,8 @@ public class StatController : MonoBehaviour
     void Start()
     {
         playerHealthContent = gameObject.transform.Find("PlayerHealthBar").GetComponent<Image>();
-        bossHealthContent = gameObject.transform.Find("BossHealthBar").GetComponent<Image>();
+        bossContainer = gameObject.transform.Find("Boss Container").gameObject;
+        bossHealthContent = bossContainer.transform.Find("BossHealthBar").GetComponent<Image>();
         ammoMeter = gameObject.transform.Find("AmmoLabel").GetComponent<TMP_Text>();
 
         playerHealth = playerMaxHealth;
@@ -41,6 +43,7 @@ public class StatController : MonoBehaviour
         ammoMeter.SetText("Ammo: " + ammoCur + " / " + ammoMax);
 
         bossPhase2.SetActive(false);
+        bossContainer.SetActive(false);
     }
 
     void Update()
@@ -50,6 +53,7 @@ public class StatController : MonoBehaviour
             bossWeakened = true;
             bossPhase1.SetActive(false);
             bossPhase2.SetActive(true);
+            bossContainer.SetActive(true);
         }
     }
 
@@ -67,6 +71,10 @@ public class StatController : MonoBehaviour
             bossHealth += amount;
             bossHealth = Math.Clamp(bossHealth, 0, bossMaxHealth);
             bossHealthContent.fillAmount = (float)bossHealth / (float)bossMaxHealth;
+            if (bossHealth == 0)
+            {
+                bossPhase2.SetActive(false);
+            }
         }
         else
         {
