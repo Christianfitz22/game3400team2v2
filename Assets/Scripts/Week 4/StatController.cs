@@ -22,6 +22,8 @@ public class StatController : MonoBehaviour
     public int ammoCur;
     private TMP_Text ammoMeter;
 
+    private bool bossWeakened = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,14 @@ public class StatController : MonoBehaviour
         ammoMeter.SetText("Ammo: " + ammoCur + " / " + ammoMax);
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            bossWeakened = true;
+        }
+    }
+
     public void changePlayerHealth(int amount)
     {
         playerHealth += amount;
@@ -43,9 +53,16 @@ public class StatController : MonoBehaviour
 
     public void changeBossHealth(int amount)
     {
-        bossHealth += amount;
-        bossHealth = Math.Clamp(bossHealth, 0, bossMaxHealth);
-        bossHealthContent.fillAmount = (float)bossHealth / (float)bossMaxHealth;
+        if (bossWeakened)
+        {
+            bossHealth += amount;
+            bossHealth = Math.Clamp(bossHealth, 0, bossMaxHealth);
+            bossHealthContent.fillAmount = (float)bossHealth / (float)bossMaxHealth;
+        }
+        else
+        {
+            Debug.Log("Boss stunned!");
+        }
     }
 
     public void changeAmmo(int amount)

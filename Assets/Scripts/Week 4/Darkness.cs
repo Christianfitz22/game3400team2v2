@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Darkness : MonoBehaviour
 {
-    private float speed = 1f;
-    private int damage = 1;
-    private float maxSize = 20f;
+    private float speed;
+    private int damage;
+    private float maxSize;
 
     public void MakeDarkness(float speed, int damage, float maxSize)
     {
@@ -18,7 +18,7 @@ public class Darkness : MonoBehaviour
     void Update()
     {
         Vector3 change = new Vector3(1f, 0f, 1f);
-        change *= Time.deltaTime;
+        change *= speed * Time.deltaTime;
         gameObject.transform.localScale += change;
         if (gameObject.transform.localScale.x > maxSize)
         {
@@ -31,6 +31,7 @@ public class Darkness : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<FPSController>().takeDamage(damage);
+            Destroy(this.gameObject);
         }
     }
 
