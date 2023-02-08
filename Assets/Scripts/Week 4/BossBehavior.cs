@@ -79,7 +79,7 @@ public class BossBehavior : MonoBehaviour
         // summon darkness AOE in the low position
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            Vector3 darknessPos = new Vector3(transform.position.x, darknessLowPos, transform.position.z);
+            Vector3 darknessPos = new Vector3(startPos.x, darknessLowPos, startPos.z);
             GameObject nextDarkness = Instantiate(darkness, darknessPos, Quaternion.identity);
             nextDarkness.GetComponent<Darkness>().MakeDarkness(darknessSpeed, darknessDamage, darknessMaxSize);
         }
@@ -87,7 +87,7 @@ public class BossBehavior : MonoBehaviour
         // summon darkness AOE in the high position
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            Vector3 darknessPos = new Vector3(transform.position.x, darknessHighPos, transform.position.z);
+            Vector3 darknessPos = new Vector3(startPos.x, darknessHighPos, startPos.z);
             GameObject nextDarkness = Instantiate(darkness, darknessPos, Quaternion.identity);
             nextDarkness.GetComponent<Darkness>().MakeDarkness(darknessSpeed, darknessDamage, darknessMaxSize);
         }

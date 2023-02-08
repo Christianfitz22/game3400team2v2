@@ -24,6 +24,11 @@ public class StatController : MonoBehaviour
 
     private bool bossWeakened = false;
 
+    [SerializeField]
+    private GameObject bossPhase1;
+    [SerializeField]
+    private GameObject bossPhase2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +39,8 @@ public class StatController : MonoBehaviour
         playerHealth = playerMaxHealth;
         bossHealth = bossMaxHealth;
         ammoMeter.SetText("Ammo: " + ammoCur + " / " + ammoMax);
+
+        bossPhase2.SetActive(false);
     }
 
     void Update()
@@ -41,6 +48,8 @@ public class StatController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             bossWeakened = true;
+            bossPhase1.SetActive(false);
+            bossPhase2.SetActive(true);
         }
     }
 
